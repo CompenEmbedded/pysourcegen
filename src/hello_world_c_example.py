@@ -19,12 +19,12 @@ from pysourcegen import *
 # Cfile
 cFile = CFile()
 
-# Header
+# Head
 cFile.AddHead(CComment('Hello World Demo'))
 cFile.AddHead(CComment(''))
-cFile.AddHead(CComment('This is a generated CPP file'))
+cFile.AddHead(CComment('This is a generated C file'))
 
-# Include cstdio
+# Include stdio.h
 cFile.AddInclude("stdio.h")
 
 main_body = CBody([])

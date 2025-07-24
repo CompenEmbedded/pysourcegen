@@ -19,12 +19,12 @@ from pysourcegen import *
 # CPPfile
 cppFile = CppFile()
 
-# Header
+# Head
 cppFile.AddHead(CppComment('Hello World Demo'))
 cppFile.AddHead(CppComment(''))
 cppFile.AddHead(CppComment('This is a generated CPP file'))
 
-# Include cstdio
+# Include iostream
 cppFile.AddInclude("iostream")
 
 main_body = CppBody([])
