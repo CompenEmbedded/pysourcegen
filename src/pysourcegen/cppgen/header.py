@@ -18,7 +18,7 @@ from pysourcegen.cppgen.item import CppItem
 class CppHeader:
 
     def __init__(self, guard_name):
-        self.template = ['[HEAD]\n', '#ifndef [GUARDNAME]\n', '#define [GUARDNAME]\n','[INC]\n', '[ITEMS]\n', '#endif  // [GUARDNAME]']
+        self.template = ['[HEAD]\n', f'#ifndef {guard_name}\n', f'#define {guard_name}\n','[INC]\n', '[ITEMS]\n', f'#endif  // {guard_name}']
         self.__includes = []
         self.__items = []
         self.__head = []
