@@ -60,19 +60,19 @@ Run them from the `src/` directory, or install the package first.
 
 ### C++ - Hello World
 
-Run [src/hello_world_cpp_example.py](src/hello_world_cpp_example.py) to build an executable called `cpphello`:
+Run [src/hello_world_cpp_example.py](https://github.com/CompenEmbedded/pysourcegen/blob/main/src/hello_world_cpp_example.py) to build an executable called `cpphello`:
 
     ./hello_world_cpp_example.py | g++ -x c++ -o cpphello -
 
 ### C - Hello World
 
-Run [src/hello_world_c_example.py](src/hello_world_c_example.py) to build an executable called `chello`:
+Run [src/hello_world_c_example.py](https://github.com/CompenEmbedded/pysourcegen/blob/main/src/hello_world_c_example.py) to build an executable called `chello`:
 
     ./hello_world_c_example.py | gcc -x c -o chello -
 
 ### Rust - Hello World
 
-Run [src/hello_world_rust_example.py](src/hello_world_rust_example.py) to build an executable called `rshello`:
+Run [src/hello_world_rust_example.py](https://github.com/CompenEmbedded/pysourcegen/blob/main/src/hello_world_rust_example.py) to build an executable called `rshello`:
 
     ./hello_world_rust_example.py | rustc -o rshello -
 
@@ -428,7 +428,7 @@ The unit tests check the exact output of every class:
 python3 -m unittest discover -s tests
 ```
 
-The Docker image in [docker/](docker/Dockerfile) has the compilers for every
+The Docker image in [docker/](https://github.com/CompenEmbedded/pysourcegen/blob/main/docker/Dockerfile) has the compilers for every
 supported language. It runs the unit tests with branch coverage and fails if
 coverage is below 100%. Then it generates a program in every language and
 compiles it, runs it and checks it with the language's formatter (rustfmt,
@@ -466,4 +466,4 @@ GitHub Actions runs the same container on every push and pull request.
 
 ## License
 
-Apache License 2.0. See [LICENSE](LICENSE).
+Apache License 2.0. See [LICENSE](https://github.com/CompenEmbedded/pysourcegen/blob/main/LICENSE).

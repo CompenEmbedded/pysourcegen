@@ -1,0 +1,55 @@
+# pysourcegen
+
+> Python library for generating source code in C, C++, Rust, Go, JavaScript/TypeScript, Java and C#. Instead of filling in text templates, you build a source file from Python objects (files, functions, classes, enums, switches, ...) and call `str()` on it or print it. Indentation, braces and blank lines are handled for you. Pure Python, Python >= 3.8, no runtime dependencies. Apache-2.0 licensed.
+
+Install with `pip install pysourcegen`. Everything is available through `from pysourcegen import *`.
+
+Key conventions:
+
+- Each language has a class prefix: `C` (C), `Cpp` (C++), `Rs` (Rust), `Go` (Go), `Js` (JavaScript/TypeScript), `Java` (Java), `Cs` (C#).
+- Each language has a file class (`CFile`, `CppFile`, `RsFile`, `GoFile`, `JsFile`, `JavaFile`, `CsFile`) with `AddHead(item)` for comments at the top and `Add(item)` for the body, plus a method for that language's imports/includes (e.g. `AddInclude`). C and C++ also have header classes with include guards (`CHeader`, `CppHeader`).
+- `<Prefix>Text(text)` is a line of code copied as-is, `<Prefix>Comment(text)` is a `//` comment, `<Prefix>Body(items)` is a `{ ... }` block.
+- Containers (bodies, classes, enums, namespaces, ...) have `Add(item)` plus helpers like `AddParameter(type, name)`, `AddEnum(name, value)` or `AddField(...)`.
+- Switches: `<Prefix>Switch`, `<Prefix>SwitchCase`, `<Prefix>SwitchDefault` (Rust uses `RsMatch` / `RsMatchArm`).
+- Output follows each language's standard formatter (rustfmt, gofmt, Prettier, .NET conventions).
+
+Example:
+
+```python
+from pysourcegen import *
+
+f = CppFile()
+f.AddHead(CppComment('This is a generated file'))
+f.AddInclude('iostream')
+
+body = CppBody([])
+body.Add(CppText('std::cout << "Hello World" << std::endl;'))
+body.Add(CppText('return 0;'))
+
+main = CppFunction('main', 'int', body)
+main.AddParameter('int', 'argc')
+main.AddParameter('char**', 'argv')
+f.Add(main)
+
+print(f)
+```
+
+## Docs
+
+- [README](https://github.com/CompenEmbedded/pysourcegen/blob/main/README.md): full API overview with tables per language, examples and changelog
+- [PyPI page](https://pypi.org/project/pysourcegen/)
+
+## Source
+
+- [C (cgen)](https://github.com/CompenEmbedded/pysourcegen/tree/main/src/pysourcegen/cgen): CFile, CHeader, CBody, CFunction, CText, CComment, CDoxyComment, CVariable, CEnum, CSwitch, CSwitchCase, CSwitchDefault
+- [C++ (cppgen)](https://github.com/CompenEmbedded/pysourcegen/tree/main/src/pysourcegen/cppgen): same as C with the `Cpp` prefix, plus CppNamespace, CppClass, CppClassConstructor
+- [Rust (rustgen)](https://github.com/CompenEmbedded/pysourcegen/tree/main/src/pysourcegen/rustgen): RsFile, RsMod, RsStruct, RsEnum, RsImpl, RsFunction, RsMatch, RsMatchArm, RsAttribute, RsBody, RsText, RsComment, RsDocComment, RsInnerDocComment
+- [Go (gogen)](https://github.com/CompenEmbedded/pysourcegen/tree/main/src/pysourcegen/gogen): GoFile, GoStruct, GoInterface, GoFunction, GoConstBlock, GoVarBlock, GoSwitch, GoSwitchCase, GoSwitchDefault, GoBody, GoText, GoComment
+- [JavaScript/TypeScript (jsgen)](https://github.com/CompenEmbedded/pysourcegen/tree/main/src/pysourcegen/jsgen): JsFile, JsClass, JsInterface, JsEnum, JsFunction, JsMethod, JsSwitch, JsSwitchCase, JsSwitchDefault, JsBody, JsText, JsComment, JsDocComment
+- [Java (javagen)](https://github.com/CompenEmbedded/pysourcegen/tree/main/src/pysourcegen/javagen): JavaFile, JavaClass, JavaInterface, JavaEnum, JavaMethod, JavaAnnotation, JavaSwitch, JavaSwitchCase, JavaSwitchDefault, JavaBody, JavaText, JavaComment, JavaDocComment
+- [C# (csgen)](https://github.com/CompenEmbedded/pysourcegen/tree/main/src/pysourcegen/csgen): CsFile, CsNamespace, CsClass, CsStruct, CsInterface, CsEnum, CsMethod, CsAttribute, CsSwitch, CsSwitchCase, CsSwitchDefault, CsBody, CsText, CsComment, CsDocComment
+
+## Optional
+
+- [Examples](https://github.com/CompenEmbedded/pysourcegen/tree/main/src): hello_world_c_example.py, hello_world_cpp_example.py, hello_world_rust_example.py
+- [Tests](https://github.com/CompenEmbedded/pysourcegen/tree/main/tests)

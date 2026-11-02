@@ -10,12 +10,25 @@ authors = [
 ]
 description = "Python Source Code Generator"
 readme = "README.md"
+license = "Apache-2.0"
 requires-python = ">=3.8"
+keywords = [
+    "code generation", "codegen", "source generator", "code generator",
+    "c", "cpp", "c++", "rust", "go", "golang", "javascript", "typescript",
+    "java", "csharp", "c#",
+]
 classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
+    "Topic :: Software Development :: Code Generators",
+    "Typing :: Typed",
 ]
 
 [project.urls]
-Homepage = "https://github.com/Compen/pysourcegen"
-Issues = "https://github.com/Compen/pysourcegen/issues"
+Homepage = "https://github.com/CompenEmbedded/pysourcegen"
+Source = "https://github.com/CompenEmbedded/pysourcegen"
+Documentation = "https://github.com/CompenEmbedded/pysourcegen#readme"
+Issues = "https://github.com/CompenEmbedded/pysourcegen/issues"
+Changelog = "https://github.com/CompenEmbedded/pysourcegen#changelog"
