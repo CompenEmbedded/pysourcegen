@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+
+# Copyright 2024 Compen Embedded B.V.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+from pysourcegen import *
+
+# Rust file
+rsFile = RsFile()
+
+# Head
+rsFile.AddHead(RsComment('Hello World Demo'))
+rsFile.AddHead(RsComment(''))
+rsFile.AddHead(RsComment('This is a generated Rust file'))
+
+main_body = RsBody([])
+# Create 1000 hello worlds
+for i in range(1000):
+    main_body.Add(RsComment(f'This is hello world number {i}'))
+    main_body.Add(RsText(f'println!("Hello World {{}}", {i});'))
+
+# Main function
+main = RsFunction(
+    "main",  # Function Name
+    None,  # Return Value, None for ()
+    # Body of main function
+    main_body)
+
+# Add main function to rsFile
+rsFile.Add(main)
+
+# Show output on terminal
+print(rsFile, end="")

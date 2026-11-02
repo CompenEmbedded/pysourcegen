@@ -1,0 +1,15 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build test image
+        run: docker build -t pysourcegen-test docker/
+      - name: Unit tests (100% coverage required) and compile checks
+        run: docker run --rm -v "$PWD:/src:ro" pysourcegen-test

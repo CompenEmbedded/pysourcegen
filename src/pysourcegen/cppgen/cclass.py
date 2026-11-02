@@ -58,11 +58,9 @@ class CppClass(CppItem):
         self.__inheritance += '{}'.format(inheritance_class)
 
     def AddPublicItem(self, item: CppItem) -> None:
-        item.SetIndent(self.start_indent + 2)
         self.__publicitems.append(item)
 
     def AddPrivateItem(self, item: CppItem) -> None:
-        item.SetIndent(self.start_indent + 2)
         self.__privateitems.append(item)
 
     def __ParseItems(self) -> str:
@@ -70,17 +68,19 @@ class CppClass(CppItem):
         if len(self.__publicitems) > 0:
             items.append(self.Indent(self.start_indent + 1, "public:"))
             for item in self.__publicitems:
+                item.SetIndent(self.start_indent + 2)
                 items.append(str(item))
 
         if len(self.__privateitems) > 0:
             items.append(self.Indent(self.start_indent + 1, "private:"))
             for item in self.__privateitems:
+                item.SetIndent(self.start_indent + 2)
                 items.append(str(item))
         return '\n'.join(items)
 
     def __str__(self) -> str:
         retval = self.GetIndentedTemplate()
         retval = retval.replace('[N]', self.__name)
-        retval = retval.replace('[I]', self.__ParseItems())
         retval = retval.replace('[H]', self.__inheritance)
+        retval = retval.replace('[I]', self.__ParseItems())
         return retval

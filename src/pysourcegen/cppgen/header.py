@@ -16,44 +16,47 @@ from pysourcegen.cppgen.item import CppItem
 
 
 class CppHeader:
+    """A header file with an include guard.
 
-    def __init__(self, guard_name):
-        self.template = ['[HEAD]\n', f'#ifndef {guard_name}\n', f'#define {guard_name}\n','[INC]\n', '[ITEMS]\n', f'#endif  // {guard_name}']
+    ``guard_name`` is used as-is for the ``#ifndef``/``#define`` macro.
+    """
+
+    def __init__(self, guard_name: str):
+        self.__guard = guard_name
         self.__includes = []
         self.__items = []
         self.__head = []
-        self.__spaces = 4
 
     def AddHead(self, head: CppItem) -> None:
         self.__head.append(head)
 
-    def AddInclude(self, include: str) -> None:
-        self.__includes.append(include)
+    def AddInclude(self, include: str, system: bool = True) -> None:
+        """Add ``#include <include>``, or ``#include "include"`` if
+        ``system`` is False."""
+        self.__includes.append(f'<{include}>' if system else f'"{include}"')
 
     def Add(self, item: CppItem) -> None:
         self.__items.append(item)
 
     def __ParseHead(self) -> str:
-        items = []
-        for item in self.__head:
-            items.append(str(item))
-        return '\n'.join(items)
+        return '\n'.join(str(item) for item in self.__head)
 
     def __ParseIncludes(self) -> str:
-        includes = []
-        for inc in self.__includes:
-            includes.append(f'#include <{inc}>')
-        return '\n'.join(includes)
+        return '\n'.join(f'#include {inc}' for inc in self.__includes)
 
     def __ParseItems(self) -> str:
-        items = []
-        for item in self.__items:
-            items.append(str(item))
-        return '\n'.join(items)
+        return '\n'.join(str(item) for item in self.__items).rstrip('\n')
 
-    def __str__(self):
-        retval = '\n'.join(self.template)
-        retval = retval.replace('[HEAD]', self.__ParseHead())
-        retval = retval.replace('[INC]', self.__ParseIncludes())
-        retval = retval.replace('[ITEMS]', self.__ParseItems())
-        return retval
+    @staticmethod
+    def _Join(sections) -> str:
+        # Empty sections are left out, so there are no stray blank lines
+        return '\n\n'.join(s for s in sections if s) + '\n'
+
+    def __str__(self) -> str:
+        return self._Join([
+            self.__ParseHead(),
+            f'#ifndef {self.__guard}\n#define {self.__guard}',
+            self.__ParseIncludes(),
+            self.__ParseItems(),
+            f'#endif  // {self.__guard}',
+        ])

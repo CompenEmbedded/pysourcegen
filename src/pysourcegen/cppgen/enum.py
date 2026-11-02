@@ -41,7 +41,8 @@ class CppEnum(CppItem):
     def __GetItemsString(self) -> str:
         retval = []
         for item in self.__items:
-            retval.append(self.Indent(self.start_indent + 1, f"{item}"))
+            item.SetIndent(self.start_indent + 1)
+            retval.append(str(item))
         return '\n'.join(retval)
 
     def __str__(self) -> str:

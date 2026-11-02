@@ -14,3 +14,8 @@
 
 from pysourcegen.cgen import *
 from pysourcegen.cppgen import *
+from pysourcegen.rustgen import *
+from pysourcegen.gogen import *
+from pysourcegen.jsgen import *
+from pysourcegen.javagen import *
+from pysourcegen.csgen import *

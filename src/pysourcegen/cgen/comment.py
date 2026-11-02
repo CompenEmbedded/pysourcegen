@@ -18,7 +18,7 @@ from pysourcegen.cgen.item import CItem
 class CComment(CItem):
 
     def __init__(self, name: str):
-        super().__init__([f'// {name}'])
+        super().__init__([f'// {name}'.rstrip()])
         self.__name = name
 
     def __str__(self) -> str:
@@ -29,7 +29,7 @@ class CComment(CItem):
 class CDoxyComment(CItem):
 
     def __init__(self, name: str):
-        super().__init__([f'//! {name}'])
+        super().__init__([f'//! {name}'.rstrip()])
         self.__name = name
 
     def __str__(self) -> str:

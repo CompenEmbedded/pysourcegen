@@ -18,7 +18,7 @@ from pysourcegen.cppgen.item import CppItem
 class CppComment(CppItem):
 
     def __init__(self, name: str):
-        super().__init__([f"// {name}"])
+        super().__init__([f"// {name}".rstrip()])
         self.__name = name
 
     def __str__(self) -> str:
@@ -29,7 +29,7 @@ class CppComment(CppItem):
 class CppDoxyComment(CppItem):
 
     def __init__(self, name: str):
-        super().__init__([f"//! {name}"])
+        super().__init__([f"//! {name}".rstrip()])
         self.__name = name
 
     def __str__(self) -> str:

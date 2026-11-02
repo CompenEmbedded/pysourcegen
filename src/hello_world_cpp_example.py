@@ -1,4 +1,4 @@
-#! /bin/python3
+#!/usr/bin/env python3
 
 # Copyright 2024 Compen Embedded B.V.
 #
@@ -44,11 +44,11 @@ main = CppFunction(
     main_body)
 
 # Main function parameters
-main.AddParameter("int", "argv")
-main.AddParameter("char**", "argc")
+main.AddParameter("int", "argc")
+main.AddParameter("char**", "argv")
 
 # Add main function to cppFile
 cppFile.Add(main)
 
 # Show output on terminal
-print(cppFile)
+print(cppFile, end="")

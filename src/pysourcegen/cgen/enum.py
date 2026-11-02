@@ -28,7 +28,7 @@ class CEnum(CItem):
             return retval
 
     def __init__(self, name: str):
-        super().__init__(['enum class [N] {', '[I]', '};'])
+        super().__init__(['enum [N] {', '[I]', '};'])
         self.__name = name
         self.__items = []
 
@@ -41,7 +41,8 @@ class CEnum(CItem):
     def __GetItemsString(self) -> str:
         retval = []
         for item in self.__items:
-            retval.append(self.Indent(self.start_indent + 1, f"{item}"))
+            item.SetIndent(self.start_indent + 1)
+            retval.append(str(item))
         return '\n'.join(retval)
 
     def __str__(self) -> str:

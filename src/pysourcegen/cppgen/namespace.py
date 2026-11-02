@@ -23,13 +23,16 @@ class CppNamespace(CppItem):
         self.__items = []
 
     def Add(self, item: CppItem) -> None:
-        if item.__class__.__name__ != self.__class__.__name__:
-            item.SetIndent(self.start_indent + 1)
         self.__items.append(item)
 
     def __ParseItems(self) -> str:
         items = []
         for item in self.__items:
+            # Nested namespaces are conventionally not indented
+            if isinstance(item, CppNamespace):
+                item.SetIndent(self.start_indent)
+            else:
+                item.SetIndent(self.start_indent + 1)
             items.append(str(item))
         return '\n'.join(items)
 

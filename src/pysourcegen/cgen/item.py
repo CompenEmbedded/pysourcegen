@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import re
+
+_PLACEHOLDER = re.compile(r'\[[A-Z]+\]')
+
 
 class CItem():
 
@@ -20,9 +24,9 @@ class CItem():
         self.start_indent = 0
 
     def Indent(self, level: int, string: str) -> str:
-        indent_str = ' ' * level * 4
-        indent_str += string
-        return indent_str
+        if not string:
+            return ''
+        return ' ' * level * 4 + string
 
     def SetIndent(self, level: int) -> None:
         self.start_indent = level
@@ -30,7 +34,7 @@ class CItem():
     def GetIndentedTemplate(self) -> str:
         retval = []
         for item in self.template:
-            if item[0] == '[':
+            if _PLACEHOLDER.fullmatch(item):
                 retval.append(item)
             else:
                 retval.append(self.Indent(self.start_indent, item))
